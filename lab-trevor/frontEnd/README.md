@@ -1,0 +1,3 @@
+# My Budget App
+
+This is a Budget App that allows you to add a spending category and add a budget value for that category.  The landing page starts with a default category that is titled please add a category.  It has a budget of 0$ associated with it.  Once you add your first category that initial category is replaced.  You can udpdate categories by clicking update or by double clicking.  The remove button removes the category item.

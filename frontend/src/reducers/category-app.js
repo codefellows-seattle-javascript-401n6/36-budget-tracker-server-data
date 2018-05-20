@@ -1,4 +1,5 @@
 import {
+  CATEGORY_DATA_INFLATE,
   CATEGORY_CREATE,
   CATEGORY_UPDATE,
   CATEGORY_DESTROY,
@@ -18,9 +19,16 @@ const categoryReducer = (state = initialState, action) => {
   }
 
   switch (action.type) {
+  case CATEGORY_DATA_INFLATE:
+    let newCategories = action.category.map(category => {
+      return new Category(category.name, category.budget, category.id, category.timestamp)
+    });
+    Object.assign(newState, state, {categories: newCategories});
+    return newState;
+
   case CATEGORY_CREATE:
     action.payload.id = uuidv4();
-    let newCategories = state.categories.concat(action.payload);
+    newCategories = state.categories.concat(action.payload);
     return {...state, categories: newCategories};
 
   case CATEGORY_UPDATE:

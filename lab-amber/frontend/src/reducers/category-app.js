@@ -1,9 +1,19 @@
 import {
+  CATEGORY_INFLATE,
   CATEGORY_CREATE,
   CATEGORY_UPDATE,
   CATEGORY_DESTROY,
 } from '../actions/category-actions.js';
 import uuidv1 from 'uuid/v1';
+
+// class Category {
+//   constructor(id, isEditing, name, budget) {
+//     this.id = id;
+//     this.isEditing = isEditing;
+//     this.name = name;
+//     this.budget = budget;
+//   }
+// }
 
 const initialState = {
   categories: [],
@@ -18,7 +28,13 @@ export default function categoryReducer(state, action) {
   let currentCategories;
   let categoryIndex;
 
+  console.log('reducer state', state);
+
   switch(action.type) {
+    case CATEGORY_INFLATE:
+      console.log('reducer inflate state', state);
+      console.log('reducer category inflate action json', action.json[0]);
+      return Object.assign(newState, state, {categories: action.json[0].categories});
     case CATEGORY_CREATE:
       currentCategories = state.categories.slice();
       let newCategory = Object.assign({}, {id: uuidv1(), isEditing: false}, action.value);

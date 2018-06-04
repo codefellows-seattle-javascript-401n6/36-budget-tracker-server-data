@@ -33,20 +33,55 @@ class CategoryForm extends React.Component {
   }
 
   handleSubmit(event) {
-    let submitFormName = this.props.name;
     event.preventDefault();
+    let submitFormName = this.props.name;
+
     if (this.props.name === 'create') {
-      this.props.categoryCreate(this.state);
+      console.log('1. props name', this.props.name);
+      let newCategory = Object.assign({}, this.state);
+      fetch('http://localhost:3000/api/categories', {
+        body: JSON.stringify(this.state),
+        headers: {
+          'content-type': 'application/json'
+        },
+        method: 'POST'
+      })
+      .then(response => {
+        console.log('2. response', response);
+        return response.json();
+      })
+      .then(json => {
+        console.log('3. new cat json', json[0]);
+        this.props.categoryCreate(json[0]);
+      });
     } else if (this.props.name === 'update') {
-      let newValue = Object.assign(this.state, {isEditing: false, id: this.props.id});
-      this.props.categoryUpdate(this.state);
+      console.log('1. update props name', this.props.name);
+      console.log('2. update event target id', event.target.id);
+      let updatedCategory = Object.assign({}, this.state, {_id: event.target.id});
+      
+      fetch(`http://localhost:3000/api/categories?=${event.target.id}`,{
+        body: JSON.stringify(updatedCategory),
+        headers: {
+          'content-type': 'application/json'
+        },
+        method: 'PUT'
+      })
+      .then(response => {
+        console.log('3. response', response);
+        return response.json();
+      })
+      .then(json => {
+        console.log('3. updated json', json);
+      });
+      // let newValue = Object.assign(this.state, {isEditing: false, id: this.props.id});
+      // this.props.categoryUpdate(this.state);
     }
   }
 
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} id={this.props.id}>
         <input onChange={this.handleNameChange} type="text" placeholder="category name"/>
         <input onChange={this.handleBudgetChange} name="budget" type="text" placeholder="budget amount"/>
         <button type="submit">Submit</button>

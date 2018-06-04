@@ -15,7 +15,7 @@ const store = createStore(
   applyMiddleware(middlewares.logger, middlewares.validator),
 );
 
-fetch('http://localhost:3000')
+fetch('http://localhost:3000/api/categories')
 .then(res => res.json())
 .then(json => {
   console.log('json:', json);

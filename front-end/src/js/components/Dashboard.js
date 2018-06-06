@@ -2,7 +2,9 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {
   messageRead,
+  messageCreate,
 } from '../actions/message-actions';
+import MessageForm from './MessageForm';
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -13,6 +15,7 @@ class Dashboard extends React.Component {
   render() {
     return (
       <div>
+        <MessageForm onSubmit={this.props.dashboardCreateMessage}/>
         {
           this.props.messages.map(element => {
             return <div key={element.id}>{element.string}</div>
@@ -28,13 +31,14 @@ const mapStateToProps = (state) => {
   return {
     messages: state.messageReducer.messages,
     error: state.messageReducer.error,
-  }
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     dashboardReadMessages: () => dispatch(messageRead()),
-  }
+    dashboardCreateMessage: (messageObj) => dispatch(messageCreate(messageObj)),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

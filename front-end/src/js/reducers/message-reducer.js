@@ -1,4 +1,9 @@
-import { MESSAGE_READ_SUCCESS, MESSAGE_READ_FAILURE } from "../actions/message-actions";
+import { 
+  MESSAGE_READ_SUCCESS, 
+  MESSAGE_READ_FAILURE, 
+  MESSAGE_CREATE_SUCCESS,
+  MESSAGE_CREATE_FAILURE,
+} from "../actions/message-actions";
 
 
 const initialState = {
@@ -27,6 +32,19 @@ function messageReducer(state, action) {
 
     case MESSAGE_READ_FAILURE:
       console.log('MESSAGE_READ_FAILURE ACTION');
+      return Object.assign(newState, state, {error: action.payload});
+    
+    case MESSAGE_CREATE_SUCCESS:
+      console.log('MESSAGE_CREATE_SUCCESS ACTION');
+      newList = state.messages.map(array => {
+        return array;
+      });
+      console.log('newList: ', newList);
+      newList.push(action.payload);
+      return Object.assign(newState, state, {messages: newList});
+
+    case MESSAGE_CREATE_FAILURE:
+      console.log('MESSAGE_CREATE_FAILURE ACTION');
       return Object.assign(newState, state, {error: action.payload});
 
     default:

@@ -3,6 +3,8 @@ import {
   MESSAGE_READ_FAILURE, 
   MESSAGE_CREATE_SUCCESS,
   MESSAGE_CREATE_FAILURE,
+  MESSAGE_DELETE_SUCCESS,
+  MESSAGE_DELETE_FAILURE,
 } from "../actions/message-actions";
 
 
@@ -45,6 +47,17 @@ function messageReducer(state, action) {
 
     case MESSAGE_CREATE_FAILURE:
       console.log('MESSAGE_CREATE_FAILURE ACTION');
+      return Object.assign(newState, state, {error: action.payload});
+
+    case MESSAGE_DELETE_SUCCESS:
+      console.log('MESSAGE_DELETE_SUCCESS ACTION', action.payload.id);
+      newList = state.messages.filter(element => {
+        return element.id !== action.payload.id;
+      });
+      return Object.assign(newState, state, {messages: newList});
+    
+    case MESSAGE_DELETE_FAILURE:
+      console.log('MESSAGE_DELETE_FAILURE ACTION');
       return Object.assign(newState, state, {error: action.payload});
 
     default:

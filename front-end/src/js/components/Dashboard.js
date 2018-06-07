@@ -3,8 +3,10 @@ import {connect} from 'react-redux';
 import {
   messageRead,
   messageCreate,
+  messageDelete,
 } from '../actions/message-actions';
 import MessageForm from './MessageForm';
+import MessageItem from './MessageItem';
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -15,10 +17,11 @@ class Dashboard extends React.Component {
   render() {
     return (
       <div>
-        <MessageForm onSubmit={this.props.dashboardCreateMessage}/>
+        <MessageForm onSubmit={this.props.dashboardCreateMessage} />
         {
           this.props.messages.map(element => {
-            return <div key={element.id}>{element.string}</div>
+            return <MessageItem key={element.id}
+            message={element} onDestroy={this.props.dashboardDeleteMessage} />
           })
         }
         {this.props.error && <div>ERROR:{this.props.error}</div>}
@@ -38,6 +41,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     dashboardReadMessages: () => dispatch(messageRead()),
     dashboardCreateMessage: (messageObj) => dispatch(messageCreate(messageObj)),
+    dashboardDeleteMessage: (id) => dispatch(messageDelete(id)),
   };
 };
 

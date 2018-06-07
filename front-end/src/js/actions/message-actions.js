@@ -67,3 +67,40 @@ export function messageCreate(messageObj) {
       });
   };
 };
+
+//Message Delete
+export const MESSAGE_DELETE_BEGIN = 'MESSAGE_DELETE_BEGIN';
+export const MESSAGE_DELETE_SUCCESS = 'MESSAGE_DELETE_SUCCESS';
+export const MESSAGE_DELETE_FAILURE = 'MESSAGE_DELETE_FAILURE';
+
+export function messageDelete(id) {
+  return (dispatch) => {
+    dispatch({
+      type: MESSAGE_DELETE_BEGIN,
+    });
+    fetch(`http://localhost:3000/messages/${id}`, {
+      method: 'delete',
+      headers: {
+        'Accept': 'application/json',
+      },
+    })
+      .then(response => {
+        console.log('response: ', response);
+        return response.json();
+      })
+      .then(json => {
+        console.log('json server response:', json);
+        dispatch({//THIS object IS action  in reducer action.payload
+          type: MESSAGE_DELETE_SUCCESS,//
+          payload: json,//
+        });//THIS object IS action  in reducer action.payload
+      })
+      .catch(error => {
+        console.log('failure ping');
+        dispatch({
+          type: MESSAGE_DELETE_FAILURE,
+          payload: `Message Delete failed: ${error.toString()}`,
+        });
+      });
+  };
+};

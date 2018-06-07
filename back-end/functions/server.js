@@ -22,6 +22,7 @@ let serverArr = [{
 app.use((0, _cors.default)());
 app.use(_bodyParser.default.json());
 app.get('/*', (request, response) => {
+  console.log('GET REQUEST HIT: ', request.body);
   response.send(serverArr);
 }); //
 

@@ -19,6 +19,7 @@ app.use(bodyParser.json());
 
 
 app.get('/*', (request, response) => {
+  console.log('GET REQUEST HIT: ', request.body);
   response.send(serverArr);
 });
 

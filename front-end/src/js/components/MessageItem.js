@@ -11,12 +11,17 @@ class MessageItem extends React.Component {
     onDestroy(this.props.message.id);
   };
 
+
+
   render() {
     return (
       <div>
         <div>
           {this.props.message.string}
         </div>
+        <MessageForm name="update" onSubmit={this.props.onUpdate}
+        message={this.props.message}
+        />
         <button onClick={this.controlDelete}>
           DELETE MESSAGE
         </button>

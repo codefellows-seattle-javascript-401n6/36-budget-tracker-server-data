@@ -34,14 +34,18 @@ app.post('/messages', (request, response) => {
 
 app.put('/messages/:id', (request, response) => {
   console.log('UPDATE REQUEST HIT: ', request.params);
+  console.log('REQUEST: ', request.body);
   serverArr = serverArr.map((element) => {
     if (element.id === request.params.id) {
       return Object.assign({}, element, {string: request.body.string});
+    } else {
+      return element;
     }
   });
   response.send({
     updateMessage: 'message updated',
     id: request.params.id,
+    string: request.body.string,
   });
 });
 

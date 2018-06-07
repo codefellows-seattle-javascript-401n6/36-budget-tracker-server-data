@@ -4,6 +4,7 @@ import {
   messageRead,
   messageCreate,
   messageDelete,
+  messageUpdate,
 } from '../actions/message-actions';
 import MessageForm from './MessageForm';
 import MessageItem from './MessageItem';
@@ -21,7 +22,9 @@ class Dashboard extends React.Component {
         {
           this.props.messages.map(element => {
             return <MessageItem key={element.id}
-            message={element} onDestroy={this.props.dashboardDeleteMessage} />
+            message={element} onDestroy={this.props.dashboardDeleteMessage} 
+            onUpdate={this.props.dashboardUpdateMessage}
+            />
           })
         }
         {this.props.error && <div>ERROR:{this.props.error}</div>}
@@ -42,6 +45,7 @@ const mapDispatchToProps = (dispatch) => {
     dashboardReadMessages: () => dispatch(messageRead()),
     dashboardCreateMessage: (messageObj) => dispatch(messageCreate(messageObj)),
     dashboardDeleteMessage: (id) => dispatch(messageDelete(id)),
+    dashboardUpdateMessage: (messageObj) => dispatch(messageUpdate(messageObj)),
   };
 };
 

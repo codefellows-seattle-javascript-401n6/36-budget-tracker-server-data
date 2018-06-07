@@ -43,8 +43,8 @@ export function messageCreate(messageObj) {
       method: 'post',
       body: JSON.stringify(messageObj),
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
+        'Accept': 'application/json',//response
+        'Content-Type': 'application/json',//body
       },
     })
       .then(response => {
@@ -100,6 +100,45 @@ export function messageDelete(id) {
         dispatch({
           type: MESSAGE_DELETE_FAILURE,
           payload: `Message Delete failed: ${error.toString()}`,
+        });
+      });
+  };
+};
+
+//Message Delete
+export const MESSAGE_UPDATE_BEGIN = 'MESSAGE_UPDATE_BEGIN';
+export const MESSAGE_UPDATE_SUCCESS = 'MESSAGE_UPDATE_SUCCESS';
+export const MESSAGE_UPDATE_FAILURE = 'MESSAGE_UPDATE_FAILURE';
+
+export function messageUpdate(messageObj) {
+  return (dispatch) => {
+    dispatch({
+      type: MESSAGE_UPDATE_BEGIN,
+    });
+    fetch(`http://localhost:3000/messages/${messageObj.id}`, {
+      method: 'put',
+      body: JSON.stringify(messageObj),
+      headers: {
+        'Accept': 'application/json',//response
+        'Content-Type': 'application/json',//body
+      },
+    })
+      .then(response => {
+        console.log('response: ', response);
+        return response.json();
+      })
+      .then(json => {
+        console.log('json ping');
+        dispatch({
+          type: MESSAGE_UPDATE_SUCCESS,
+          payload: json,
+        });
+      })
+      .catch(error => {
+        console.log('failure ping');
+        dispatch({
+          type: MESSAGE_UPDATE_FAILURE,
+          payload: `Message update failed: ${error.toString()}`,
         });
       });
   };

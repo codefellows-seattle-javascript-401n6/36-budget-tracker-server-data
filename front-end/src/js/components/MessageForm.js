@@ -6,9 +6,15 @@ class MessageForm extends React.Component {
     this.state = {
       string: ''
     };
+    if (props.message) {
+      this.state = {
+        ...props.message,
+      }
+    }
   }
 
 controlChange = (event, targetInputValue) => {
+  console.log('HIT ME')
   let newState = {};
   newState[targetInputValue] = event.target.value;
   this.setState(newState);
@@ -17,7 +23,10 @@ controlChange = (event, targetInputValue) => {
 controlSubmit = (event) => {
   event.preventDefault();
   if (this.props.name === 'update') {
-    console.log('not done yet!');
+    console.log('message: ', this.props.message);
+    const message = Object.assign({}, this.props.message, this.state);
+    this.props.onSubmit(message);
+    console.log('is updating...');
   } else {
     let messageObj = {
       string: this.state.string,

@@ -20,18 +20,18 @@ class CategoryItem extends React.Component {
 
   toggleEdit(event) {
     let id = event.target.id;
-    this.props.categoryUpdate({isEditing: true, id});;
+    this.props.categoryUpdate({isEditing: true, _id: id});;
   }
 
   toggleOffEdit(event) {
     let id = event.target.id;
-    this.props.categoryUpdate({isEditing: false, id});;
+    this.props.categoryUpdate({isEditing: false, _id: id});;
   }
 
   handleDelete(event) {
     event.preventDefault();
-    let id = event.target.id;
-    this.props.categoryDestroy(id);
+    let _id = event.target._id;
+    this.props.categoryDestroy(_id);
   }
 
   render() {
@@ -45,8 +45,8 @@ class CategoryItem extends React.Component {
     return (
       <li key={this.props.key} id={this.props.id}>
         <h3>{this.props.name}: ${this.props.budget}<button id={this.props.id} onClick={this.handleDelete}>X</button> <button id={this.props.id} onClick={this.toggleEdit}>Edit</button></h3> 
-        <ExpenseForm categoryId={this.props.id} name="create" buttonText="Add Expense" />
-        <ExpenseList categoryId={this.props.id}/>
+        <ExpenseForm categoryId={this.props.catId} name="create" buttonText="Add Expense" />
+        <ExpenseList categoryId={this.props.catId}/>
       </li>
     )
   }

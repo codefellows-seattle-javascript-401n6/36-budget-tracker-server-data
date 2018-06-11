@@ -7,12 +7,12 @@ import {categoryInflate} from '../actions/category-actions.js';
 import reducers from '../reducers/';
 
 import middlewares from '../middleware/';
-import {logger} from '../middleware/';
+import {logger, thunk, validator} from '../middleware/';
 
 const store = createStore(
   reducers,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  applyMiddleware(middlewares.logger, middlewares.validator),
+  applyMiddleware(middlewares.logger, middlewares.validator, middlewares.thunk),
 );
 
 fetch('http://localhost:3000/api/categories')
